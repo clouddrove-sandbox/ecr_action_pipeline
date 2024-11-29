@@ -65,7 +65,7 @@ jobs:
       # Build the Docker image from the project folder
       - name: Build Docker image
         run: |
-          docker build -t ruchit-node ./nodejs-docker-example
+          docker build -f Dockerfile -t ruchit-node ./nodejs-docker-example
 
       # Tag the Docker image
       - name: Tag Docker image
