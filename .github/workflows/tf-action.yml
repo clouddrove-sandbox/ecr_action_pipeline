@@ -24,23 +24,11 @@ on:
         default: 'dev'
 
 jobs:
-  setup_terraform:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Set up Terraform version
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.6.6
-
   terraform:
     uses: clouddrove/github-shared-workflows/.github/workflows/terraform_workflow.yml@master
 
     with:
+      terraform_version: 1.6.6
       working_directory: '.'  # Root directory since terraform files are in root
       provider: 'aws'
       aws_region: 'us-east-1'
