@@ -24,8 +24,22 @@ on:
         default: 'dev'
 
 jobs:
+  setup_terraform:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Terraform version
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.6
+
   terraform:
     uses: clouddrove/github-shared-workflows/.github/workflows/terraform_workflow.yml@master
+
     with:
       working_directory: '.'  # Root directory since terraform files are in root
       provider: 'aws'
@@ -45,12 +59,6 @@ jobs:
       # Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      # Set up terraform version
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.6.6
 
       # Set up AWS credentials for Docker
       - name: Set up AWS credentials
