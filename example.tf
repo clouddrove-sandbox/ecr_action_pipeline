@@ -7,6 +7,7 @@ locals {
   environment = "test"
 }
 
+
 module "vpc" {
   source                              = "clouddrove/vpc/aws"
   version                             = "2.0.0"
@@ -22,8 +23,7 @@ module "vpc" {
 
 
 module "subnets" {
-  source  = "clouddrove/subnet/aws"
-  version = "2.0.1"
+  source             = "./../../"
   name               = local.name
   environment        = local.environment
   availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
