@@ -17,6 +17,9 @@ crash.log
 # Ignore .terraform directory (which stores plugins and modules)
 .terraform/
 
+# Ignore terraform lock file
+.terraform.lock.hcl
+
 # Ignore CLI configuration file
 .terraform.rc
 terraform.rc
