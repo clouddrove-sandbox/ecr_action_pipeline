@@ -70,10 +70,12 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ruchit-node  # Replace with your ECR repository name
+          ECR_REPOSITORY: your-repository-name  # Replace with your ECR repository name
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./nodejs-docker-example
+          echo "ECR Registry: $ECR_REGISTRY"
+          echo "ECR Repository: $ECR_REPOSITORY"
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} ./nodejs-docker-example
 
       # Tag the Docker image
       - name: Tag Docker image
