@@ -2,13 +2,13 @@ name: 'Terraform Deployment and Docker Push'
 on:
   push:
     branches: [ main, master ]
-    paths:
-      - '*.tf'
-      - '.github/workflows/terraform_action.yml'
+    # paths:
+    #   - '*.tf'
+    #   - '.github/workflows/terraform_action.yml'
   pull_request:
     branches: [ main, master ]
-    paths:
-      - '*.tf'
+    # paths:
+    #   - '*.tf'
   workflow_dispatch:
     inputs:
       destroy:
@@ -45,6 +45,12 @@ jobs:
       # Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      # Set up terraform version
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.6
 
       # Set up AWS credentials for Docker
       - name: Set up AWS credentials
