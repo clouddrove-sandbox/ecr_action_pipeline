@@ -7,7 +7,9 @@ locals {
   environment = "test"
 }
 
-
+##----------------------------------------------------------------------------- 
+## Vpc Module call.    
+##-----------------------------------------------------------------------------
 module "vpc" {
   source                              = "clouddrove/vpc/aws"
   version                             = "2.0.0"
@@ -21,7 +23,12 @@ module "vpc" {
   assign_generated_ipv6_cidr_block    = true
 }
 
-
+##----------------------------------------------------------------------------- 
+## Subnet Module call.
+## Below module will deploy only public subnet.  
+##-----------------------------------------------------------------------------
+#tfsec:ignore:aws-ec2-no-excessive-port-access 
+#tfsec:ignore:aws-ec2-no-public-ingress-acl
 module "subnets" {
   source             = "./../../"
   name               = local.name
