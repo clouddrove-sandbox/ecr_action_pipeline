@@ -63,19 +63,9 @@ jobs:
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m0h2p2z6
 
       # Build the Docker image from the project folder
-      # - name: Build Docker image
-      #   run: |
-      #     docker build -t ruchit-node ./nodejs-docker-example
-
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ruchit-node  # Replace with your ECR repository name
-          IMAGE_TAG: ${{ github.sha }}
+      - name: Build Docker image
         run: |
-          echo "ECR Registry: $ECR_REGISTRY"
-          echo "ECR Repository: $ECR_REPOSITORY"
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} ./nodejs-docker-example
+          docker build -t ruchit-node ./nodejs-docker-example
 
       # Tag the Docker image
       - name: Tag Docker image
