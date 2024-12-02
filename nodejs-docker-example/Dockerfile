@@ -1,25 +1,31 @@
-# Stage 1
+# Stage 1: Build Stage
+FROM node:18 AS builder
 
-FROM node:18 as builder
-
+# Set the working directory
 WORKDIR /build
 
-COPY package*.json .
-RUN npm install
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install --only=production
 
-COPY src/ src/
-COPY tsconfig.json .
-
+# Copy the application source code and build it
+COPY tsconfig.json ./
+COPY src/ ./src/
 RUN npm run build
 
-# Stage 2
+# Stage 2: Runtime Stage
+FROM node:18 AS runner
 
-FROM node:18 as runner
-
+# Set the working directory
 WORKDIR /app
 
-COPY --from=builder /build/package*.json .
-COPY --from=builder /build/node_modules node_modules/
-COPY --from=builder /build/dist dist/
+# Copy only the necessary runtime files from the build stage
+COPY --from=builder /build/package*.json ./
+COPY --from=builder /build/node_modules ./node_modules/
+COPY --from=builder /build/dist ./dist/
 
-CMD [ "npm", "start" ]
+# Expose the application port (optional)
+EXPOSE 3000
+
+# Command to run the application
+CMD ["npm", "start"]
