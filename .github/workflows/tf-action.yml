@@ -66,6 +66,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -f ./nodejs-docker-example/Dockerfile ./nodejs-docker-example
+          docker images
 
       # Tag the Docker image
       - name: Tag Docker image
